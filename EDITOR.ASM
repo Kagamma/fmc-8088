@@ -320,7 +320,7 @@ Start:          mov     AX,Seg TitleText
                 call    GetPath
                 call    ResetAdlib
                 call    InstallTimer
-                call    InitDisplay
+                ;call    InitDisplay
                 call    ClearPatterns
                 jmp     SetupScreen1
 
@@ -821,7 +821,7 @@ PatternEditor:  cmp     AL,'>'
                 je      Octave5
                 cmp     AX,4d36h
                 je      Octave6
-                
+
                 cmp     AL,')'
                 je      Octave0
                 cmp     AL,'!'
