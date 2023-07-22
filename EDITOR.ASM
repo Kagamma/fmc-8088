@@ -160,12 +160,12 @@ PianoKeys       db      2ch,1
                 db      1ah,30
                 db      '!',255
 
-        ;Seuraa todella kryptinen osuus: Ilmaisee missÑ jÑrjestyksessÑ ja miten
-        ;instrumentin arvot piirretÑÑn nÑytîlle, ja miten niitÑ voi editoida.
+        ;Seuraa todella kryptinen osuus: Ilmaisee missÅEjÑrjestyksessÅEja miten
+        ;instrumentin arvot piirretÑÑn nÑytîlle, ja miten niitÅEvoi editoida.
         ;Formaatti:
         ;0 Sarake
         ;1 Rivi
-        ;2 Nimi (15 merkkiÑ+loppunolla)
+        ;2 Nimi (15 merkkiÅEloppunolla)
         ;18 Byte vai YES/NO (0=Byte 1=Y/N)
         ;19 Maksimiarvo (and-operaatio...)
         ;20 Offsetti instrumenttidatassa
@@ -276,11 +276,11 @@ S1_I2           db      '[F10] Kill op. [DEL] Del Pos. [S] Save [SPC] Play/Stop 
 S1_I3           db      '[TAB] Song     [INS-DEL] I/D Line [<>] Instr.sel [F3-F5] Cut/Copy/Paste [KEYPAD]',0
 S1_I4           db      '[F10] Kill op. [CR] Edit Mode     [+-] Patt.sel  [F7-F8] Tr. Down/Up     Octave',0
 
-Screen          db      0               ;LÑhdemme songiruudusta
+Screen          db      0               ;LÅEdemme songiruudusta
 Unsaved         db      0
 SpareIdent      db      '    '          ;Latausta varten
 
-        ;TÑstÑ alkaa itse piisidata
+        ;TÑstÅEalkaa itse piisidata
 
 SongIdent       db      'FMC!'
 SongName        db      '                    ',0
@@ -304,7 +304,7 @@ EndSong         dw      6606h
 
 Start:          mov     AX,Seg TitleText
                 mov     DS,AX
-                mov     AX,0305h                ;NÑppÑimistî hurjan nopeaksi
+                mov     AX,0305h                ;NÑppÅEmistÅEhurjan nopeaksi
                 mov     BL,0004h                ;ettei editoidessa kyllÑsty
                 int     16h
                 mov     AX,1900h                ;Aloituslevyasema
@@ -504,7 +504,7 @@ OKtoLoad:
                 mov     CL,[SongChans]
                 shl     DX,7                    ;x128
                 shl     CX,6                    ;x64
-                add     CX,DX                   ;CX sisÑltÑÑ patternin pituuden
+                add     CX,DX                   ;CX sisÅEtÑÑ patternin pituuden
                 mov     BP,seg Song
                 mov     DS,BP                   ;Aloitetaan patternien lataus
 LoadPatterns:   xor     DX,DX
@@ -523,7 +523,7 @@ SongLoadQuit2:  mov     BX,[Handle]
                 int     21h
                 call    UpdateSong
                 call    UpdatePattern
-                call    InitMusic               ;TÑllÑ nopealla kutsusarjalla
+                call    InitMusic               ;TÅElÅEnopealla kutsusarjalla
                 call    StopMusic               ;uudelleenrakennetaan muuttu-
 SongLoadQuit:   call    ClearMessage            ;neet instrumentit
                 call    UpdateCursor
@@ -572,7 +572,7 @@ SHPskip:        inc     DI
                 mov     CL,[SongChans]
                 shl     DX,7                    ;x128
                 shl     CX,6                    ;x64
-                add     CX,DX                   ;CX sisÑltÑÑ patternin pituuden
+                add     CX,DX                   ;CX sisÅEtÑÑ patternin pituuden
                 mov     BP,seg Song
                 mov     DS,BP                   ;Aloitetaan patternien talletus
 SavePatterns:   xor     DX,DX
@@ -821,6 +821,22 @@ PatternEditor:  cmp     AL,'>'
                 je      Octave5
                 cmp     AX,4d36h
                 je      Octave6
+                
+                cmp     AL,')'
+                je      Octave0
+                cmp     AL,'!'
+                je      Octave1
+                cmp     AL,'@'
+                je      Octave2
+                cmp     AL,'#'
+                je      Octave3
+                cmp     AL,'$'
+                je      Octave4
+                cmp     AL,'%'
+                je      Octave5
+                cmp     AL,'^'
+                je      Octave6
+
                 cmp     AH,52h
                 je      PattInsert
                 cmp     AH,53h
@@ -1998,17 +2014,17 @@ UpdatePattern2: xor     AH,AH
                 mov     BP,1                    ;Kanavalaskuri
                 mov     [PosAdd],0
 UpdatePLoop1:   push    DI
-                mov     CX,9                    ;9 riviÑ
+                mov     CX,9                    ;9 riviÅE
                 xor     AH,AH
                 mov     AL,[CurrentPattView]
-                mov     SI,AX                   ;SI sisÑltÑÑ rivinumeron
+                mov     SI,AX                   ;SI sisÅEtÑÑ rivinumeron
                 mov     BL,11                   ;Aloitusrivi
 UpdatePLoop2:   push    CX                      ;Rivilaskuri talteen
                 mov     AL,0
                 mov     CL,15
                 mov     DX,SI
                 call    PrintByte
-                mov     byte ptr [NoteName],'-'         ;Oletuksena tyhjÑ                mov     byte ptr [NoteName+1],'-'
+                mov     byte ptr [NoteName],'-'         ;Oletuksena tyhjÅE               mov     byte ptr [NoteName+1],'-'
                 mov     byte ptr [NoteName+1],'-'       ;nuottipaikka
                 mov     byte ptr [NoteName+2],'-'
                 xor     AH,AH
